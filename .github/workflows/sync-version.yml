@@ -5,13 +5,13 @@ on:
    types: [version_update]
    
 permissions:
- contents: write
+  contents: write
  
 jobs:
- release:
-   runs-on: ubuntu-latest
+  release:
+    runs-on: ubuntu-latest
    
-   steps:
+    steps:
      - name: Checkout repository
        uses: actions/checkout@v4
        with:
@@ -80,11 +80,11 @@ jobs:
          git commit -m "chore: update Examples/bower.json to v${VERSION}" || echo "Nothing to commit"
          git push origin "$BRANCH"
          
-      - name: Create Pull Request
-        env:
+     - name: Create Pull Request
+       env:
           GH_TOKEN: ${{ secrets.PAT }}
           RELEASE_NOTES: ${{ github.event.client_payload.release_notes }}
-        run: |
+       run: |
           git fetch origin master
 
           if git diff --quiet origin/master..."$BRANCH"; then
